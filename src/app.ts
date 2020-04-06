@@ -51,11 +51,10 @@ const dbConfig: sql.config = JSON.parse(DB_CONFIG_JSON);
 const SYNC_INETRVAL_SECONDS = process.env["SYNC_INETRVAL_SECONDS"] || "60";
 const syncIntervalSec = parseInt(SYNC_INETRVAL_SECONDS);
 
-async function getAllADUsers() {
+const msGraphClient = rac.Client.init(async () => {
     const {token_type, access_token} = await new TokensAcquisition(TENANT_ID, APP_CLIENT_ID, APP_CLIENT_SECRET).getMSGraphAccessToken();
-    const msGraphClient = rac.Client.init(async () => ({baseUrl: "https://graph.microsoft.com", credentialPlacement: "header", credential: {value: `${token_type} ${access_token}`}}));
-    return await new MSGraphSnapshot(msGraphClient).getAllUsers();    
-}
+    return {baseUrl: "https://graph.microsoft.com", credentialPlacement: "header", credential: {value: `${token_type} ${access_token}`}};
+});
 
 class DB extends DBBase {
     constructor(config: sql.config) {
@@ -77,7 +76,7 @@ async function runProc() {
     console.log("");
     try {
         console.log(`${new Date().toISOString()}: taking users snapshot from Azure AD...`);
-        const users = await getAllADUsers();
+        const users = await new MSGraphSnapshot(msGraphClient).getAllUsers(); 
         console.log(`${new Date().toISOString()}: done snapshot. number of users = ${users.length}`);
         console.log(`${new Date().toISOString()}: sync. to the database...`);
         const syncId = await db.syncADUsers(USER_ID, users);
