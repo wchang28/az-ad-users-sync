@@ -73,7 +73,7 @@ class DB extends DBBase {
 
 const db = new DB(dbConfig);
 
-async function runProc() {
+async function sync() {
     console.log("");
     try {
         console.log(`${new Date().toISOString()}: taking users snapshot from Azure AD...`);
@@ -88,11 +88,11 @@ async function runProc() {
     console.log("");
 }
 
-const polling = pp.PeriodicPolling.get<void>(async (pollInfo) => {await runProc();}, syncIntervalSec);
+const polling = pp.PeriodicPolling.get<void>(async (pollInfo) => {await sync();}, syncIntervalSec);
 polling.start();
 
 /*
-runProc()
+sync()
 .then(() => {
     console.log("\nDone");
     process.exit(0);
