@@ -18,7 +18,7 @@ export class TokensAcquisition {
         const ret: {token_endpoint: string}  = await rac.Client.init(async () => ({baseUrl: `https://login.microsoftonline.com/${tenant_id}/v2.0/.well-known/openid-configuration`}))
         .api("/")
         .get();
-		return ret.token_endpoint;
+        return ret.token_endpoint;
     }
     public async getAccessTokenForScope(scope: string) {
         const tokenGrant: AzureADTokenGrant = await rac.Client.init(() => TokensAcquisition.getAzureADTokenGrantEndpoint(this.tenant_id).then((tokenEndpoint: string) => ({baseUrl: tokenEndpoint})))
@@ -29,7 +29,7 @@ export class TokensAcquisition {
         .send({client_secret: this.client_secret})
         .send({scope})
         .post();
-		return tokenGrant;
+        return tokenGrant;
     }
     public async getMSGraphAccessToken() {
         return await this.getAccessTokenForScope("https://graph.microsoft.com/.default");
