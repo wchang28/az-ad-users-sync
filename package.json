@@ -1,0 +1,24 @@
+{
+  "name": "az-ad-users-sync",
+  "version": "1.0.0",
+  "description": "Azure AD Users Sync",
+  "scripts": {
+    "transpile": "tsc",
+    "start": "node ./dist/app.js"
+  },
+  "author": "Wen Chang",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wchang28/az-ad-users-sync.git"
+  },
+  "dependencies": {
+    "@microsoft/microsoft-graph-types": "^1.12.0",
+    "@types/mssql": "^6.0.0",
+    "@types/node": "^13.11.0",
+    "mssql": "^6.2.0",
+    "periodic-polling": "git+https://github.com/wchang28/periodic-polling.git",
+    "rest-api-client": "git+https://github.com/wchang28/rest-api-client.git",
+    "typescript": "^3.8.3"
+  }
+}
