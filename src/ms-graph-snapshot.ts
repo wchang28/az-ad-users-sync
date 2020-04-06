@@ -11,17 +11,14 @@ export interface MSGraphAPIODataRuturn<VT> {
 export class MSGraphSnapshot {
     constructor(private msGraphClient: rac.Client) {
     }
-
     // "GET" on MS Graph API
     private async msGraphAPIGet<VT>(path: string) {
         return await this.msGraphClient.api(path).get<MSGraphAPIODataRuturn<VT>>();
     }
-
     private getPath(urlString: string): string {
         let parts = url.parse(urlString, false);
         return parts.path;
     }
-	
     async getAllObjets<O>(path: string) {
         let objs: O[] = [];
         let res = await this.msGraphAPIGet<O>(path);
@@ -30,10 +27,9 @@ export class MSGraphSnapshot {
             res = await this.msGraphAPIGet<O>(this.getPath(res["@odata.nextLink"]));
             objs = objs.concat(res.value);
         }
-		return objs;
+        return objs;
     }
-	
     async getAllUsers() {
-		return await this.getAllObjets<MicrosoftGraph.User>(`/v1.0/users`);
+        return await this.getAllObjets<MicrosoftGraph.User>(`/v1.0/users`);
     }
 }
