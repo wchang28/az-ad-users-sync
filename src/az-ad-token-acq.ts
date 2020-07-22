@@ -11,6 +11,7 @@ export interface AzureADTokenGrant {
     not_before: string;     // ex. "1521038498"
 }
 
+// token acquisition using "client_credentials" flow
 export class TokensAcquisition {
     constructor(private tenant_id: string, private client_id: string, private client_secret: string) {
     }

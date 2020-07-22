@@ -1,1 +1,1 @@
-# Azure AD Users Sync
+# Azure AD Users Sync using "client_credentials" flow

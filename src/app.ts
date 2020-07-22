@@ -13,7 +13,7 @@ import {MSGraphSnapshot} from "./ms-graph-snapshot";
 import {DBBase} from "./db-base";
 import * as sql from "mssql";
 import {User} from "@microsoft/microsoft-graph-types";
-import * as pp from "periodic-polling";
+import * as ip from "interval-polling";
 
 const USER_ID = process.env["USER_ID"];
 if (!USER_ID) {
@@ -88,7 +88,7 @@ async function sync() {
     console.log("");
 }
 
-const polling = pp.PeriodicPolling.get<void>(async (pollInfo) => {await sync();}, syncIntervalSec);
+const polling = ip.Polling.get<void>(async () => {await sync();}, syncIntervalSec);
 polling.start();
 
 /*
