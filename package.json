@@ -4,6 +4,7 @@
   "description": "Azure AD Users Sync",
   "scripts": {
     "transpile": "tsc",
+    "postinstall": "npm run transpile",
     "start": "node ./dist/app.js"
   },
   "author": "Wen Chang",
